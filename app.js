@@ -34,7 +34,8 @@ const getLikes = num => async (req,res)=>{
     setInterval(() => {
         try{
             let likes = 0;
-            // TODO push total likes to database
+
+            // TODO have a batch job to update a DB with queued likes
             q.start(function (err) {
                 if (err) throw err
                 likes = q.results.flat().length;
@@ -45,7 +46,7 @@ const getLikes = num => async (req,res)=>{
         } catch (e) {
             console.log(e);
         }
-    }, 0250);
+    }, 1000);
 }
 
 app1.get('/likes', getLikes(1)).post('/likes', getLikes(1));
