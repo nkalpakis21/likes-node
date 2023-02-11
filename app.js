@@ -36,6 +36,7 @@ const getLikes = num => async (req,res)=>{
             let likes = 0;
 
             // TODO have a batch job to update a DB with queued likes
+            // TODO have caching layer between app server and DB
             q.start(function (err) {
                 if (err) throw err
                 likes = q.results.flat().length;
