@@ -22,19 +22,25 @@ app.get('/likes', async function(req,res){
         "Cache-Control": "no-cache",
       });
       setInterval(async() => {
-        await fetch(`${serverBaseURL}/likes`, {method: 'GET'})
-        .then((res) => res.json())
-        .then((data) => {
-            try{
-                console.log('likes data updated');
-                res.write(`data: {"likes": ${data.likes}}`);
-                res.write("\n\n");
-                return;
-            } catch(e) {
-                console.error(e);
-                return;
-            }
-        })
+        try{
+            await fetch(`${serverBaseURL}/likes`, {method: 'GET'})
+            .then((res) => res.json())
+            .then((data) => {
+                try{
+                    console.log('writing!');
+                    res.write(`data: {"likes": ${data.likes}}`);
+                    res.write("\n\n");
+                    return;
+                } catch(e) {
+                    console.error(e);
+                    return;
+                }
+            })
+        } catch (e) {
+            console.log('***********');
+            console.log(e);
+        }
+        
       }, 0250);
 });
   
